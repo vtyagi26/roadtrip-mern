@@ -1,0 +1,45 @@
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background-color: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 1000;
+  color: white;
+}
+
+.topbar a {
+  color: white;
+  margin: 0 2rem;
+  text-decoration: none;
+  font-weight: 900;
+  transition: color 0.2s ease-in-out;
+}
+
+.topbar a:hover {
+  color: #38bdf8; /* Tailwind sky-400 */
+}
+/* Topbar.css */
+.search-input {
+  width: 500px;         /* Increase width */
+  height: 40px;         /* Increase height */
+  padding: 0 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  outline: none;
+  background-color: hsla(0, 33%, 96%, 0.884);
+  color: rgb(255, 255, 255);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease;
+}
+
+.search-input:focus {
+  box-shadow: 0 0 8px rgb(255, 255, 255);
+}
+

@@ -1,0 +1,26 @@
+.sidebar {
+  position: fixed;
+  top: 60px; /* height of topbar */
+  left: 0;
+  width: 250px;
+  height: calc(100vh - 60px);
+  background-color: #1e293b;
+  padding: 30px;
+  box-sizing: border-box;
+  color: white;
+  z-index: 999;
+}
+
+.sidebar a {
+  color: white;
+  padding: 35px 20px;
+  font-size: large;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.2s;
+}
+
+.sidebar a:hover {
+  background-color: #2061ca;
+}

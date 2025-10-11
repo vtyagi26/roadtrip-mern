@@ -77,7 +77,13 @@ road-trip-itinerary/
 🖼️ Screenshots
 Generate Trip	Trip Analytics	Trip Expenditure
 A clean interface for users to input their starting point, destination, and trip duration to generate a new itinerary.	A dashboard displaying key metrics like total trips, average distance, and total expenditure.	A view to track and manage trip expenses, showing a breakdown of costs.
-![Generate Trip]	![Trip Analytics]	![Trip Expenditure]
+![Generate Trip](https://github.com/vtyagi26/roadtrip-mern/blob/main/assets/im1.png?raw=true)	!
+[Trip Analytics](https://github.com/vtyagi26/roadtrip-mern/blob/main/assets/im2.png?raw=true)	!
+[Trip Expenditure](https://github.com/vtyagi26/roadtrip-mern/blob/main/assets/im3.png?raw=true)!
+[alt](https://github.com/vtyagi26/roadtrip-mern/blob/main/assets/im4.png?raw=true)!
+[allt](https://github.com/vtyagi26/roadtrip-mern/blob/main/assets/im5.png?raw=true)!
+[alt1](https://github.com/vtyagi26/roadtrip-mern/blob/main/assets/im6.png?raw=true)!
+[alt2](https://github.com/vtyagi26/roadtrip-mern/blob/main/assets/im7.jpg?raw=true)!
 Trip Recommendations	Distance Calculator	About & Contact
 Curated suggestions for road trip routes based on user preferences or popular destinations.	A dedicated tool for calculating the distance between a starting and ending point.	Informational pages detailing the project's mission and how to get in touch.
 ![Trip Recommendations]	![Distance Calculator]	![About & Contact]

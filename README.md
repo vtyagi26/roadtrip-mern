@@ -1,35 +1,10 @@
-ROAD TRIP ITINERARY GENERATOR
---------------------------------------
+# Road Trip Itinerary Generator
 
-OVERVIEW
-The Road Trip Itinerary Generator is a full-stack MERN (MongoDB, Express, React, Node.js) web application that allows users to generate, view, and analyze personalized road trip itineraries.
-It provides detailed insights including distance, expenditure, analytics, and smart recommendations — all within an intuitive dashboard layout.
+A full-stack MERN (MongoDB, Express, React, Node.js) project that helps users generate, analyze, and manage their road trip itineraries.
 
---------------------------------------
+---
 
-FEATURES
-- AI-powered itinerary generation
-- Analytics dashboard for trip metrics and trends
-- Expenditure tracking for each trip
-- Distance calculator for destinations
-- Smart trip recommendations
-- MongoDB integration for storing user data
-- Dark mode toggle for better user experience
-- (Upcoming) JWT authentication for secure access
-
---------------------------------------
-
-TECH STACK
-Frontend: React.js (Vite) + Tailwind CSS
-Backend: Node.js + Express.js
-Database: MongoDB Atlas
-Styling: SCSS / CSS Modules + Tailwind
-Data Visualization (Planned): Recharts / Chart.js
-AI (Future): OpenAI / LangChain for itinerary optimization
-
---------------------------------------
-
-FOLDER STRUCTURE
+## 📁 Folder Structure
 
 road-trip-itinerary/
 │
@@ -38,8 +13,8 @@ road-trip-itinerary/
 │   ├── routes/
 │   ├── services/
 │   ├── models/
-│   ├── .env
-│   └── server.js
+│   ├── server.js
+│   └── .env
 │
 ├── frontend/
 │   ├── src/
@@ -52,88 +27,84 @@ road-trip-itinerary/
 │   │   │   ├── Expenditure.jsx
 │   │   │   ├── Distance.jsx
 │   │   │   ├── Recommendations.jsx
-│   │   │   └── styles/ (CSS files)
+│   │   │   └── styles/
+│   │   │       ├── topbar.css
+│   │   │       ├── sidebar.css
+│   │   │       └── pages.css
 │   │   ├── pages/
+│   │   │   ├── LandingPage.jsx
+│   │   │   ├── MyTrips.jsx
+│   │   │   └── GenerateTrip.jsx
 │   │   ├── App.jsx
 │   │   ├── main.jsx
 │   │   └── index.css
+│   ├── package.json
 │   └── vite.config.js
 │
 ├── package.json
 ├── README.txt
-└── LICENSE
+└── setup.sh
 
---------------------------------------
+---
 
-INSTALLATION & SETUP
+## ⚙️ Installation & Setup
 
-PREREQUISITES
-- Node.js (v16 or higher)
-- MongoDB Atlas account or local MongoDB
-- npm or yarn
-
-1. Clone the Repository
-   git clone https://github.com/<your-username>/road-trip-itinerary.git
+1. Clone the repository
+   git clone https://github.com/your-username/road-trip-itinerary.git
    cd road-trip-itinerary
 
-2. Backend Setup
+2. Setup the backend
    cd backend
    npm install
 
-   Create a .env file inside /backend with the following:
+3. Setup environment variables
+   Create a `.env` file in the backend directory with:
    PORT=8000
-   MONGODB_URI=<your_mongodb_connection_string>
-   OPENAI_API_KEY=<optional_for_future_AI_features>
+   MONGODB_URI=your_mongodb_connection_string
+   OPENAI_API_KEY=optional_ai_key_here
 
-   Run the backend server:
+4. Run the backend
    npm run dev
-   (Server starts at http://localhost:8000)
 
-3. Frontend Setup
+5. Setup the frontend
    cd ../frontend
    npm install
    npm run dev
-   (App runs at http://localhost:5173)
 
---------------------------------------
+6. Open your browser and visit:
+   http://localhost:5173
 
-KEY COMPONENTS
+---
 
-Topbar.jsx - Navigation bar with dark mode and links
-Sidebar.jsx - Sidebar for navigating between app pages
-About.jsx - Information about the app and mission
-Contact.jsx - Contact form and social links
-Analytics.jsx - Dashboard for trip analytics
-Expenditure.jsx - Expense tracking page
-Distance.jsx - Route and distance calculator
-Recommendations.jsx - Smart trip suggestions
+## 🧠 Features
 
---------------------------------------
+- Generate AI-based road trip itineraries
+- Analyze trip data (distance, expenditure, analytics)
+- Save and view past trips
+- Clean and responsive UI with React and Tailwind CSS
+- Sidebar + Topbar layout
+- MongoDB Atlas integration
 
-FUTURE ENHANCEMENTS
-- Integration with Google Maps API for route visualization
-- JWT-based authentication and user login
-- Recharts for graphical analytics
-- AI-powered itinerary generation
-- Offline caching for mobile use
+---
 
---------------------------------------
+## 📄 Tech Stack
 
-DEVELOPER NOTES
-- Built with React + Vite for high performance
-- Backend follows modular route-controller-service architecture
-- MongoDB Atlas for scalable data storage
-- Uses Tailwind + SCSS for responsive UI design
-- Pages are fully layout-aware (not overlapped by topbar/sidebar)
+Frontend: React, Vite, Tailwind CSS  
+Backend: Node.js, Express.js  
+Database: MongoDB (Atlas)  
+AI (Optional): OpenAI API  
 
---------------------------------------
+---
 
-LICENSE
-This project is licensed under the MIT License.
+## 🚀 Future Enhancements
 
---------------------------------------
+- User authentication (JWT)
+- Real-time analytics
+- Weather and maps integration
+- Personalized recommendations
+- Export itinerary as PDF or CSV
 
-CONTACT
-Developer: Vaibhav Tyagi
-Email: vaibhavtyagi.dev@gmail.com
-LinkedIn: https://www.linkedin.com/in/vaibhav-tyagi
+---
+
+## 👨‍💻 Author
+Developed by Vaibhav Tyagi

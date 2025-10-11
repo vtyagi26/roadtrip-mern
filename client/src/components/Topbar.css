@@ -4,42 +4,49 @@
   left: 0;
   right: 0;
   height: 70px;
-  background-color: #0f172a;
+  background-color: #0c1e2b;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 40px;
+  padding: 0 30px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  color: white;
 }
 
-.topbar a {
-  color: white;
-  margin: 0 2rem;
-  text-decoration: none;
-  font-weight: 900;
-  transition: color 0.2s ease-in-out;
+.topbar-left .logo {
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
-.topbar a:hover {
-  color: #38bdf8; /* Tailwind sky-400 */
-}
-/* Topbar.css */
-.search-input {
-  width: 500px;         /* Increase width */
-  height: 40px;         /* Increase height */
-  padding: 0 1rem;
-  font-size: 1rem;
+.topbar-center .search-input {
+  width: 250px;
+  padding: 8px 12px;
+  border-radius: 8px;
   border: none;
-  border-radius: 6px;
   outline: none;
-  background-color: hsla(0, 33%, 96%, 0.884);
-  color: rgb(255, 255, 255);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.2s ease;
 }
 
-.search-input:focus {
-  box-shadow: 0 0 8px rgb(255, 255, 255);
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
+.topbar-right a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.topbar-right a:hover {
+  text-decoration: underline;
+}
+
+.lang-dropdown {
+  background: #ffffff20;
+  color: white;
+  border: 1px solid #ffffff50;
+  border-radius: 6px;
+  padding: 5px 8px;
+}

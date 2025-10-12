@@ -1,0 +1,69 @@
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Adjust height to account for the 65px navbar */
+  height: calc(100vh - 65px); 
+  background-color: #f0f4f8;
+  padding: 20px;
+}
+
+/* ... the rest of your Login.css file remains the same ... */
+
+.login-form {
+  background: white;
+  padding: 3rem; /* Increased padding for more space */
+  border-radius: 12px; /* Softer corners */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+  width: 100%;
+  max-width: 480px; /* Made the form wider */
+  text-align: center;
+}
+
+.login-form h2 {
+  margin-bottom: 2rem;
+  font-size: 2rem; /* Larger title */
+  color: #0c1e2b;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 1rem; /* Increased input padding */
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Softer input corners */
+  font-size: 1.1rem; /* Larger font size in input */
+}
+
+.login-btn {
+  width: 100%;
+  padding: 1rem; /* Increased button padding */
+  border: none;
+  border-radius: 8px;
+  background-color: #1309ce;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem; /* Added space above button */
+}
+
+.login-btn:hover {
+  background-color: #0ea5e9;
+}
+
+.register-link {
+  margin-top: 1.5rem;
+}

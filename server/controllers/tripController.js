@@ -1,50 +1,40 @@
 const Trip = require('../models/Trip');
 
-//Generate
-const generateTrip = async (req, res) => {
-  const { origin, destination, startDate, endDate, preferences } = req.body;
-
-  const itinerary = [
-    { day: 1, plan: `Start at ${origin}, drive to midway.` },
-    { day: 2, plan: `Arrive at ${destination}, explore.` }
-  ];
-
-  const newTrip = new Trip({
-    origin,
-    destination,
-    startDate,
-    endDate,
-    preferences,
-    itinerary
-  });
-
-  await newTrip.save();
-  res.json({ message: "Trip generated!", trip: newTrip });
-};
-
-// 🆕 GET /api/trip/:id
-const getTripById = async (req, res) => {
+// @desc    Create a new trip
+const createTrip = async (req, res) => {
   try {
-    const trip = await Trip.findById(req.params.id);
-    if (!trip) return res.status(404).json({ error: 'Trip not found' });
-    res.json(trip);
-  } catch (err) {
-    res.status(500).json({ error: 'Server error' });
+    const { tripName, startLocation, endLocation, numberOfDays } = req.body;
+
+    // Create a new trip document
+    const trip = new Trip({
+      tripName,
+      startLocation,
+      endLocation,
+      numberOfDays,
+      user: req.user.id, // Get the user ID from the middleware
+    });
+
+    const createdTrip = await trip.save();
+    res.status(201).json(createdTrip);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
   }
 };
 
-// 🆕 GET /api/trips
-const getAllTrips = async (req, res) => {
+// @desc    Get all trips for a logged-in user
+const getUserTrips = async (req, res) => {
   try {
-    const trips = await Trip.find(); // Later you can add a user filter
+    // Find all trips where the 'user' field matches the logged-in user's ID
+    const trips = await Trip.find({ user: req.user.id });
     res.json(trips);
-  } catch (err) {
-    res.status(500).json({ error: 'Server error' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
   }
 };
 
 module.exports = {
-  generateTrip,
-  getTripById,
-  getAllTrips,
+  createTrip,
+  getUserTrips,
 };

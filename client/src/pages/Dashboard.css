@@ -7,13 +7,11 @@
   background-image: url('https://thumbs.dreamstime.com/b/vintage-road-trip-collage-nostalgic-paper-collage-combines-retro-elements-like-road-mountains-graphic-art-vintage-road-331795613.jpg');
   background-position: top center;
   background-size: cover;
-  background-repeat: no-repeat;
   color: white;
 }
 
 .home-content {
-  flex: 1;
-  margin-left: 240px; /* space for sidebar */
+  flex: 1; /* space for sidebar */
   margin-top: 80px;   /* space for topbar */
   padding: 2rem;
   display: flex;

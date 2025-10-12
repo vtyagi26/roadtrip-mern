@@ -1,9 +1,9 @@
 // src/pages/Home.jsx
 import React from "react";
 import { Typewriter } from "react-simple-typewriter";
-import "./Home.css";
+import "./Dashboard.css";
 
-const Home = () => {
+const Dashboard = () => {
   return (
     <div className="home-container">
       <div className="home-content">
@@ -45,4 +45,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;

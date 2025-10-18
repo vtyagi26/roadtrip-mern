@@ -1,44 +1,39 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-
-// Layouts
-import Layout from "./components/Layout";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom'; // NOTE: No 'BrowserRouter as Router'
+import Layout from './components/Layout';
+import PublicNavbar from './components/PublicNavbar';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import MyTrips from './pages/MyTrips';
+import Recommendations from './pages/Recommendations';
+import Expenditure from './pages/Expenditure';
+import Distance from './pages/Distance';
+import Analytics from './pages/Analytics';
 import AuthLayout from './components/AuthLayout';
 
-// Pages
-import Dashboard from './pages/Dashboard'; // The main page
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Analytics from "./pages/Analytics";
-import Expenditure from "./pages/Expenditure";
-import Distance from "./pages/Distance";
-import Recommendations from "./pages/Recommendations";
-import Login from "./pages/Login";
-import MyTrips from "./pages/Mytrips";
-
-const App = () => (
-  <Routes>
-    {/* The main layout now handles the root path "/" */}
-    <Route path="/" element={<Layout />}>
-      {/* The Dashboard is now the index page, visible to everyone */}
-      <Route index element={<Dashboard />} /> 
-      
-      {/* These routes will be protected by the links in the dynamic sidebar */}
-      <Route path="mytrips" element={<MyTrips />} />
-      <Route path="about" element={<About />} />
-      <Route path="contact" element={<Contact />} />
-      <Route path="analytics" element={<Analytics />} />
-      <Route path="expenditure" element={<Expenditure />} />
-      <Route path="distance" element={<Distance />} />
-      <Route path="recommendations" element={<Recommendations />} />
-    </Route>
-
-    {/* Auth routes still use their own layout */}
-    <Route element={<AuthLayout />}>
+function App() {
+  return (
+    // The <Router> wrapper has been removed from this file to fix the error.
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/" element={<Layout><PublicNavbar /><Dashboard /></Layout>} />
+      <Route path="/about" element={<Layout><PublicNavbar /><About /></Layout>} />
+      <Route path="/contact" element={<Layout><PublicNavbar /><Contact /></Layout>} />
       <Route path="/login" element={<Login />} />
-      {/* <Route path="/register" element={<Register />} /> */}
-    </Route>
-  </Routes>
-);
+      <Route path="/register" element={<Register />} />
+
+      {/* Private Routes */}
+      <Route path="/dashboard" element={<AuthLayout><Dashboard /></AuthLayout>} />
+      <Route path="/mytrips" element={<AuthLayout><MyTrips /></AuthLayout>} />
+      <Route path="/recommendations" element={<AuthLayout><Recommendations /></AuthLayout>} />
+      <Route path="/expenditure" element={<AuthLayout><Expenditure /></AuthLayout>} />
+      <Route path="/distance" element={<AuthLayout><Distance /></AuthLayout>} />
+      <Route path="/analytics" element={<AuthLayout><Analytics /></AuthLayout>} />
+    </Routes>
+  );
+}
 
 export default App;

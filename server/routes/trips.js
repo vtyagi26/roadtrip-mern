@@ -1,21 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { createTrip, getUserTrips } = require('../controllers/tripController');
+// *** FIX: Correctly destructure all three functions ***
+const { createTrip, getUserTrips, generateTripReport } = require('../controllers/tripController');
 const { protect } = require('../middleware/authMiddleware');
 
-// @route   POST api/trips
-// @desc    Create a new trip
-// @access  Private (requires token)
-router.post('/', protect, createTrip);
+router.route('/').post(protect, createTrip).get(protect, getUserTrips);
 
-// ... other trip routes
-
-// Route to generate a trip report
-router.post('/:id/generate-report', protect, generateTripReport); // POST request to generate
-
-// @route   GET api/trips
-// @desc    Get all trips for a user
-// @access  Private (requires token)
-router.get('/', protect, getUserTrips);
+// New route for generating the report
+router.route('/:id/generate-report').post(protect, generateTripReport);
 
 module.exports = router;

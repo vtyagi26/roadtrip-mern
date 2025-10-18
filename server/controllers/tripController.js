@@ -1,28 +1,18 @@
 const asyncHandler = require('express-async-handler');
-const Trip = require('../models/Trip');
-const User = require('../models/User'); // Keep if needed elsewhere, otherwise remove
+const Trip = require('../models/Trip'); // Ensure path is correct
 const OpenAI = require('openai');
-require('dotenv').config(); // Ensure dotenv is configured, ideally in server.js
 
-// --- Instantiate OpenAI Client ---
-// It's generally better to instantiate this once, maybe in a separate config file
-// But placing it here works for simplicity
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // Load key from .env file
-});
-
+// NOTE: We are NOT initializing the OpenAI client here at the top level anymore.
 
 // @desc    Create a new trip
 // @route   POST /api/trips
-// @access  Private (Assumed based on req.user.id usage)
+// @access  Private
 const createTrip = asyncHandler(async (req, res) => {
-  // Original createTrip logic - wrapped with asyncHandler
   const { tripName, startLocation, endLocation, numberOfDays } = req.body;
 
-  // Basic validation (you might want more robust validation)
   if (!tripName || !startLocation || !endLocation || numberOfDays == null) {
-      res.status(400);
-      throw new Error('Please provide tripName, startLocation, endLocation, and numberOfDays');
+    res.status(400);
+    throw new Error('Please provide all required trip details');
   }
 
   const trip = new Trip({
@@ -30,28 +20,46 @@ const createTrip = asyncHandler(async (req, res) => {
     startLocation,
     endLocation,
     numberOfDays,
-    user: req.user.id, // Ensure your authMiddleware sets req.user.id
+    user: req.user.id, // Assumes authMiddleware sets req.user.id correctly
   });
 
   const createdTrip = await trip.save();
   res.status(201).json(createdTrip);
 });
 
-
 // @desc    Get all trips for a logged-in user
 // @route   GET /api/trips
-// @access  Private (Assumed based on req.user.id usage)
+// @access  Private
 const getUserTrips = asyncHandler(async (req, res) => {
-  // Original getUserTrips logic - wrapped with asyncHandler
-  const trips = await Trip.find({ user: req.user.id }); // Ensure req.user.id is available
+  // Ensure req.user exists and has an id property
+  if (!req.user || !req.user.id) {
+    res.status(401);
+    throw new Error('Not authorized, user not found or token failed');
+  }
+  const trips = await Trip.find({ user: req.user.id });
   res.json(trips);
 });
 
 
-// @desc    Generate a report for a specific trip
+// @desc    Generate a report for a specific trip using AI
 // @route   POST /api/trips/:id/generate-report
 // @access  Private
 const generateTripReport = asyncHandler(async (req, res) => {
+  // Ensure req.user exists and has an id property
+  if (!req.user || !req.user.id) {
+    res.status(401);
+    throw new Error('Not authorized, user not found or token failed');
+  }
+
+  // *** FIX: Initialize OpenAI client INSIDE the function. ***
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+      res.status(500);
+      throw new Error('Server configuration error: OpenAI API key is missing.');
+  }
+
+  const openai = new OpenAI({ apiKey }); // Use the variable
+
   const trip = await Trip.findById(req.params.id);
 
   if (!trip) {
@@ -60,50 +68,58 @@ const generateTripReport = asyncHandler(async (req, res) => {
   }
 
   // Ensure the logged-in user owns the trip
-  if (!req.user || trip.user.toString() !== req.user.id) { // Added check for req.user existence
+  if (trip.user.toString() !== req.user.id) {
      res.status(401);
-     throw new Error('User not authorized');
+     throw new Error('User not authorized to access this trip');
   }
 
-  // --- OpenAI API Call ---
+  // Prevent re-generating if a report already exists
+  if (trip.generatedReport) {
+    res.status(400);
+    throw new Error('A report for this trip has already been generated.');
+  }
+
   try {
-    // Construct a prompt for the AI using available trip details
-    const prompt = `Generate a concise travel report summary for a road trip with the following details:
-                   Trip Name: ${trip.tripName}
-                   Start Location: ${trip.startLocation?.address || 'Not specified'}
-                   End Location: ${trip.endLocation?.address || 'Not specified'}
-                   Duration: ${trip.numberOfDays} days.
-                   Include potential highlights, suggested activities based on the locations, and a brief thematic summary. Keep it engaging and under 150 words.`; // Refined prompt
+    const prompt = `Generate a travel itinerary and summary for a road trip.
+      - Trip Name: "${trip.tripName}"
+      - From: ${trip.startLocation.address}
+      - To: ${trip.endLocation.address}
+      - Duration: ${trip.numberOfDays} days
+
+      Create a short, engaging summary (around 150 words) that includes potential highlights, suggested activities (like sightseeing, food, adventure), and a concluding sentence making it sound exciting.`;
 
     const completion = await openai.chat.completions.create({
       messages: [{ role: 'user', content: prompt }],
-      model: 'gpt-3.5-turbo', // Or 'gpt-4' if you have access
-      max_tokens: 200 // Adjust token limit as needed
+      model: 'gpt-3.5-turbo',
+      max_tokens: 250,
     });
 
     const reportText = completion.choices[0]?.message?.content?.trim();
 
     if (!reportText) {
-         throw new Error('Failed to generate report text from AI');
+      throw new Error('Failed to get a valid response from the AI model.');
     }
 
-    // --- Save Report to MongoDB ---
+    // Save the report to the trip document
     trip.generatedReport = reportText;
     const updatedTrip = await trip.save();
 
-    res.status(200).json(updatedTrip); // Send back the updated trip with the report
+    res.status(200).json(updatedTrip); // Send back the updated trip
 
   } catch (error) {
-    console.error('Error generating trip report:', error);
+    console.error('AI Report Generation Error:', error);
+    if (error instanceof OpenAI.APIError) { // Specific OpenAI error handling
+        res.status(error.status || 500);
+        throw new Error(`OpenAI API Error: ${error.message}`);
+    }
+    // General server error
     res.status(500);
-    // Provide a more specific error message if possible
-    throw new Error(`Could not generate trip report. ${error.message || ''}`);
+    throw new Error('Server error: Could not generate trip report.');
   }
 });
-
 
 module.exports = {
   createTrip,
   getUserTrips,
-  generateTripReport, // Export the new function
+  generateTripReport,
 };

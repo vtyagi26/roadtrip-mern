@@ -1,31 +1,31 @@
-// 1. Import Dependencies
-require('dotenv').config();
+// Ensure dotenv runs first to load all environment variables
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require('express');
-const cors = require('cors');
 const connectDB = require('./config/db');
+const tripRoutes = require('./routes/trips');
+const userRoutes = require('./routes/users');
+const cors = require('cors');
 
-// 2. Initialize Express App
-const app = express();
-
-// 3. Connect to Database
+// Connect to MongoDB
 connectDB();
 
-// 4. Initialize Middleware
-app.use(cors());
-app.use(express.json()); // This allows us to accept JSON data in the request body
+const app = express();
 
-// 5. Create a simple test route
+app.use(express.json()); // Middleware for parsing JSON bodies
+app.use(cors());
+
+// API Routes - This is where your backend defines the paths
+app.use('/api/trips', tripRoutes);
+app.use('/api/users', userRoutes); // This correctly sets up /api/users/...
+
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
-// 6. Define Routes (We will uncomment this later)
- app.use('/api/trips', require('./routes/trips'));
- app.use('/api/users', require('./routes/users'));
-
-// 7. Set up the port and start the server
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

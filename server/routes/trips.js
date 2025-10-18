@@ -8,6 +8,11 @@ const { protect } = require('../middleware/authMiddleware');
 // @access  Private (requires token)
 router.post('/', protect, createTrip);
 
+// ... other trip routes
+
+// Route to generate a trip report
+router.post('/:id/generate-report', protect, generateTripReport); // POST request to generate
+
 // @route   GET api/trips
 // @desc    Get all trips for a user
 // @access  Private (requires token)

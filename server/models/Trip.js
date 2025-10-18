@@ -12,6 +12,9 @@ const TripSchema = new mongoose.Schema({
     required: true,
     ref: 'User', // This creates the connection to the User model
   },
+  generatedReport: {
+    type: String
+  },
   tripName: {
     type: String,
     required: true,
